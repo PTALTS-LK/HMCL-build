@@ -1,0 +1,25 @@
+name: Build jar
+on:
+  workflow_dispatch:
+
+jobs:
+  Build_jar:
+     runs-on: ubuntu-latest
+     steps:
+     - name: Setup Java JDK
+       uses: actions/setup-java@v4.0.0
+       with:
+         java-version: '8'
+         distribution: 'liberica'
+         java-package: 'jdk+fx'
+     - name: Checkout HMCL Source Code
+       uses: actions/checkout@v4
+       with:
+         repository: 'HMCL-dev/HMCL'
+     - name: Build Jar
+       run: |
+         ./gradlew clean build
+     - uses: actions/upload-artifact@v4
+       with:
+         name: HMCL Jar
+         path: lib
